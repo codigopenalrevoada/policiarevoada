@@ -1,0 +1,920 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Cores do tema anterior */
+:root {
+    --primary-color: #3f51b5;
+    --primary-hover: #303f9f;
+    --secondary-color: #f50057;
+    --secondary-hover: #c51162;
+    --bg-dark: #121212;
+    --bg-card: #1e1e1e;
+    --bg-input: #2c2c2c;
+    --border-color: #333333;
+    --text-light: #ffffff;
+    --text-muted: #9e9e9e;
+    --text-dark: #212121;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --inafiancavel-color: #f44336; /* Cor para artigos inafiançáveis */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.7);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.7);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5), 0 4px 6px rgba(0, 0, 0, 0.7);
+    --transition: all 0.3s ease;
+}
+
+/* Ajustes adicionais para layout moderno */
+body {
+    background: var(--bg-dark);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Header mais elegante */
+.header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+    padding: 25px 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-revoada {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.header .title {
+    flex: 1;
+    padding-left: 10px;
+}
+
+.header p {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+/* Bolinhas de polícia */
+.police-badges {
+    display: flex;
+    gap: 12px;
+}
+
+.badge-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.badge-icon:hover {
+    transform: scale(1.15);
+    border-color: var(--primary-color);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+}
+
+/* Bolinhas de polícia com caminhos locais */
+.badge-pmerj {
+    background-image: url('images/brasao-pmerj.png');
+}
+
+.badge-pcerj {
+    background-image: url('images/brasao-pcerj.png');
+}
+
+.badge-prf {
+    background-image: url('images/brasao-prf.png');
+}
+
+/* Main Grid Layout */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Prisoner Section */
+.prisoner-section {
+    grid-column: 1 / -1;
+    margin-bottom: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    overflow: hidden;
+    padding: 15px;
+}
+
+.prisoner-section h2 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.prisoner-section h2 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Formulários mais elegantes */
+.form-control {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    padding: 10px 12px;
+    border-radius: 3px;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    background: rgba(63, 81, 181, 0.1);
+    box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Crimes Section */
+.crimes-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    overflow: hidden;
+    padding: 15px;
+}
+
+.crimes-section h2 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.crimes-section h2 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.crimes-grid {
+    display: flex;
+    gap: 20px;
+}
+
+.crimes-grid-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo para categorias de crimes */
+.crime-category {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    margin-bottom: 8px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.category-header {
+    background: rgba(63, 81, 181, 0.1);
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-header:hover {
+    background: rgba(63, 81, 181, 0.2);
+}
+
+.category-header h3 {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.category-header h3 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.toggle-btn {
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.toggle-btn.active i {
+    transform: rotate(180deg);
+}
+
+/* Botões de crime mais modernos */
+.crime-buttons {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+}
+
+/* Estilo para botões de crime */
+.crime-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    line-height: 1.4;
+    position: relative;
+    overflow: hidden;
+}
+
+.crime-btn:hover {
+    background: rgba(63, 81, 181, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.crime-btn:active {
+    transform: translateY(0);
+}
+
+.crime-btn.selected {
+    background: rgba(63, 81, 181, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: inset 0 0 5px rgba(63, 81, 181, 0.5);
+}
+
+/* Estilo para crimes inafiançáveis */
+.crime-btn[data-inafiancavel="true"] {
+    border-left: 4px solid var(--primary-color);
+}
+
+.crime-btn[data-inafiancavel="true"]::after {
+    content: "Inafiançável";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-bottom-left-radius: 3px;
+    z-index: 2;
+}
+
+.crime-btn[data-inafiancavel="true"][data-quantidade-info]:after {
+    content: "Inafiançável";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-bottom-left-radius: 3px;
+    z-index: 3;
+}
+
+.crime-btn[data-quantidade-info]:after {
+    content: attr(data-quantidade-info);
+    position: absolute;
+    top: 22px;
+    right: 0;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-bottom-left-radius: 3px;
+    z-index: 2;
+}
+
+/* Estilo para artigos ativamente selecionados */
+.crime-btn.active {
+    background: rgba(63, 81, 181, 0.1);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Results Section */
+.results-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    position: sticky;
+    top: 20px;
+    padding: 15px;
+}
+
+.results-section h2 {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.results-section h2 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.selected-crimes h3,
+.attenuants h3,
+.seized-items h3,
+.dirty-money h3 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.selected-crimes h3 i,
+.attenuants h3 i,
+.seized-items h3 i,
+.dirty-money h3 i {
+    margin-right: 8px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+}
+
+.crimes-list {
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-input);
+}
+
+.empty-message {
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+.crime-item {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.crime-item:last-child {
+    border-bottom: none;
+}
+
+.crime-item .crime-info {
+    flex: 1;
+}
+
+.crime-item .crime-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 2px;
+}
+
+.crime-item .crime-details {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.crime-item .remove-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.crime-item .remove-btn:hover {
+    color: var(--danger-color);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Calculations */
+.calculations {
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 15px 0;
+}
+
+.calc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.calc-item:last-child {
+    border-bottom: none;
+}
+
+.calc-item .label {
+    font-weight: 500;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.calc-item .label i {
+    margin-right: 8px;
+}
+
+.calc-item .value {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+#totalPena {
+    color: var(--warning-color);
+}
+
+#totalMulta {
+    color: var(--danger-color);
+}
+
+#totalFianca {
+    color: var(--success-color);
+}
+
+/* Atenuantes */
+.attenuant-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+/* Estilo para o campo de meses do Reanimado HP */
+.reanimado-hp-label {
+    display: flex;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100%;
+    padding-right: 0;
+}
+
+.reanimado-hp-label .hp-input-container {
+    margin-left: auto;
+    width: 90px;
+}
+
+.hp-input-container {
+    margin-left: 10px;
+    flex-shrink: 0;
+    width: 80px;
+}
+
+.hp-meses {
+    padding: 4px 8px !important;
+    font-size: 0.8rem !important;
+    height: 28px;
+    text-align: center;
+    width: 100%;
+}
+
+.hp-info {
+    color: var(--primary-color);
+    font-size: 0.8rem;
+    cursor: help;
+    margin-left: 3px;
+    opacity: 0.8;
+}
+
+/* Checkbox estilo moderno */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    box-sizing: border-box;
+    line-height: 1.3;
+}
+
+.checkbox-label .checkmark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-card);
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: var(--primary-color);
+    border-color: var(--primary-hover);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    box-sizing: border-box;
+}
+
+.checkbox-label .checkmark,
+.checkbox-label > span:not(.checkmark),
+.checkbox-label > div {
+    vertical-align: middle;
+}
+
+.reanimado-hp-label {
+    gap: 10px !important;
+}
+
+/* Seized Items and Dirty Money */
+.seized-items,
+.dirty-money {
+    margin-bottom: 20px;
+}
+
+.seized-items textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+/* Action Buttons */
+.actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Botões modernos */
+.btn {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    cursor: pointer;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-hover);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.btn-secondary {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+}
+
+.btn-secondary:hover {
+    background: rgba(63, 81, 181, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Warning */
+.excess-warning {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid var(--warning-color);
+    border-radius: 6px;
+    color: var(--warning-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    animation: pulse 2s infinite;
+    display: none;
+}
+
+.excess-warning i {
+    margin-right: 8px;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+/* Footer mais discreto */
+.footer {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+}
+
+.developer-name {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.developer-name:hover {
+    color: var(--primary-hover);
+}
+
+/* Scrollbar personalizado */
+.crimes-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.crimes-list::-webkit-scrollbar-track {
+    background: var(--bg-card);
+    border-radius: 0 6px 6px 0;
+}
+
+.crimes-list::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.crimes-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .crimes-grid {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header .logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .attenuant-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .actions {
+        flex-direction: column;
+    }
+}
+
+/* Notificações */
+.notificacao {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    color: var(--text-light);
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    max-width: 350px;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-left-width: 4px;
+}
+
+.notificacao.mostrar {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notificacao i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.notificacao.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.notificacao.success i {
+    color: var(--success-color);
+}
+
+.notificacao.error {
+    border-left: 4px solid var(--danger-color);
+}
+
+.notificacao.error i {
+    color: var(--danger-color);
+}
+
+.notificacao.info {
+    border-left: 4px solid var(--primary-color);
+}
+
+.notificacao.info i {
+    color: var(--primary-color);
+}
+
+.notificacao.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.notificacao.warning i {
+    color: var(--warning-color);
+}
+
+/* Estilos para a fiança */
+.fianca-item, 
+.fianca-distribuicao {
+    display: none; /* Escondido por padrão */
+}
+
+.fianca-distribuicao {
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.fianca-distribuicao .calc-item {
+    padding: 6px 0;
+}
+
+.fianca-distribuicao .calc-item .label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.fianca-distribuicao .calc-item .value {
+    font-size: 0.95rem;
+}
+
+/* Quando o advogado constituído estiver marcado */
+.show-fianca .fianca-item,
+.show-fianca .fianca-distribuicao {
+    display: flex;
+}
+
+.show-fianca .fianca-distribuicao {
+    display: block;
+} 
+
+/* Estilo para "SEM FIANÇA" */
+.sem-fianca {
+    color: var(--inafiancavel-color);
+    font-weight: bold;
+} 
+
+/* Estilo para a nota sobre artigos inafiançáveis */
+.inafiancavel-note {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: -5px 0 10px;
+    opacity: 0.7;
+    text-align: center;
+} 
