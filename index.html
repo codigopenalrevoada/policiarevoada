@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Penal - POLICIA REVOADA</title>
+    
+    <!-- Proteções de Segurança -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <!-- Desabilitar cache para DevTools -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Desabilitar seleção de texto */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Permitir seleção apenas em inputs e textareas */
+        input, textarea {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+        
+        /* Esconder elementos quando DevTools estiver aberto */
+        .devtools-hidden {
+            display: none !important;
+        }
+        
+        /* Proteção contra inspeção */
+        body::before {
+            content: "Acesso Negado";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            color: #fff;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            z-index: 999999;
+        }
+        
+        body.inspected::before {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="images/logo-revoada.png" alt="Logo Revoada" class="logo-revoada">
+            </div>
+            <div class="title">
+                <h1>CALCULADORA PENAL</h1>
+                <p>Policia Revoada - Sistema de Sentenciamento</p>
+            </div>
+            <div class="police-badges">
+                <div class="badge-icon badge-pmerj" title="PMERJ"></div>
+                <div class="badge-icon badge-pcerj" title="PCERJ"></div>
+                <div class="badge-icon badge-prf" title="PRF"></div>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- Seção de Dados do Preso -->
+            <div class="prisoner-section">
+                <h2><i class="fas fa-user-lock"></i> DADOS DO PRESO</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prisonerName">Nome:</label>
+                        <input type="text" id="prisonerName" class="form-control" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="prisonerRG">RG:</label>
+                        <input type="text" id="prisonerRG" class="form-control" placeholder="RG" inputmode="numeric" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <label for="lawyerRG">Advogado:</label>
+                        <input type="text" id="lawyerRG" class="form-control" placeholder="RG do advogado (opcional)" inputmode="numeric" maxlength="20">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Crimes -->
+            <div class="crimes-section">
+                <h2><i class="fas fa-gavel"></i> CRIMES APLICADOS</h2>
+                <div class="crimes-grid">
+                    <div class="crimes-grid-column">
+                        <!-- Crimes Diversos (101–103) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-exclamation-triangle"></i> Crimes Diversos</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="azaralhamento-recrutamento" data-tempo="30" data-multa="10000">Art. 101 - Azaralhamento Recrutamento**</button>
+                                <button class="crime-btn" data-crime="agressao-funcionario" data-tempo="25" data-multa="8000">Art. 102 - Agressão a Funcionário Público**</button>
+                                <button class="crime-btn" data-crime="prevaricacao" data-tempo="40" data-multa="15000">Art. 103 - Prevaricação**</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes Contra a Vida (104–108) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-skull"></i> Crimes Contra a Vida</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="homicidio-doloso-qualificado" data-tempo="120" data-multa="50000">Art. 104 - Homicídio Doloso Qualificado**</button>
+                                <button class="crime-btn" data-crime="homicidio-doloso" data-tempo="100" data-multa="40000">Art. 105 - Homicídio Doloso**</button>
+                                <button class="crime-btn" data-crime="tentativa-homicidio" data-tempo="80" data-multa="35000">Art. 106 - Tentativa de Homicídio**</button>
+                                <button class="crime-btn" data-crime="homicidio-culposo" data-tempo="60" data-multa="25000">Art. 107 - Homicídio Culposo</button>
+                                <button class="crime-btn" data-crime="homicidio-culposo-transito" data-tempo="50" data-multa="20000">Art. 108 - Homicídio Culposo no Trânsito</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes Contra Direitos Fundamentais (109–111) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-balance-scale"></i> Crimes Contra Direitos Fundamentais</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="lesao-corporal" data-tempo="20" data-multa="5000">Art. 109 - Lesão Corporal</button>
+                                <button class="crime-btn" data-crime="sequestro" data-tempo="90" data-multa="40000">Art. 110 - Sequestro**</button>
+                                <button class="crime-btn" data-crime="carcere-privado" data-tempo="35" data-multa="12000">Art. 111 - Cárcere Privado</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes Contra o Patrimônio (112–117) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-money-bill-wave"></i> Crimes Contra o Patrimônio</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="desmanche-veiculos" data-tempo="40" data-multa="15000">Art. 112 - Desmanche de Veículos</button>
+                                <button class="crime-btn" data-crime="furto" data-tempo="30" data-multa="8000">Art. 113 - Furto</button>
+                                <button class="crime-btn" data-crime="receptacao-veiculos" data-tempo="35" data-multa="12000">Art. 114 - Receptação de Veículos</button>
+                                <button class="crime-btn" data-crime="roubo-veiculos" data-tempo="50" data-multa="20000">Art. 115 - Roubo de Veículos</button>
+                                <button class="crime-btn" data-crime="tentativa-furto" data-tempo="20" data-multa="5000">Art. 116 - Tentativa de Furto</button>
+                                <button class="crime-btn" data-crime="furto-veiculos" data-tempo="35" data-multa="12000">Art. 117 - Furto de Veículos</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes de Roubos, Furtos e Variantes (118–120) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-mask"></i> Crimes de Roubos, Furtos e Variantes</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="roubo" data-tempo="45" data-multa="15000">Art. 118 - Roubo</button>
+                                <button class="crime-btn" data-crime="furto-caixa" data-tempo="40" data-multa="12000">Art. 119 - Furto a Caixa Eletrônico</button>
+                                <button class="crime-btn" data-crime="extorsao" data-tempo="55" data-multa="25000">Art. 120 - Extorsão</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes de Porte, Posse e Tráfico (121–137) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-gun"></i> Crimes de Porte, Posse e Tráfico</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="posse-pecas-armas" data-tempo="15" data-multa="5000">Art. 121 - Posse de Suprimentos de Armas</button>
+                                <button class="crime-btn" data-crime="posse-capsulas" data-tempo="10" data-multa="3000">Art. 122 - Posse de Suprimentos de Munição</button>
+                                <button class="crime-btn" data-crime="trafico-armas" data-tempo="80" data-multa="35000">Art. 123 - Tráfico de Armas</button>
+                                <button class="crime-btn" data-crime="trafico-itens-ilegais" data-tempo="60" data-multa="25000">Art. 124 - Tráfico de Itens Ilegais</button>
+                                <button class="crime-btn" data-crime="porte-arma-pesada" data-tempo="35" data-multa="15000">Art. 125 - Porte de Arma Pesada</button>
+                                <button class="crime-btn" data-crime="porte-arma-leve" data-tempo="25" data-multa="12000">Art. 126 - Porte de Arma Leve</button>
+                                <button class="crime-btn" data-crime="disparo-arma" data-tempo="20" data-multa="8000">Art. 127 - Disparo de Arma de Fogo</button>
+                                <button class="crime-btn" data-crime="trafico-municoes" data-tempo="45" data-multa="20000" data-quantidade-info="+100">Art. 128 - Tráfico de Munições</button>
+                                <button class="crime-btn" data-crime="posse-municao" data-tempo="8" data-multa="2000" data-quantidade-info="-100">Art. 129 - Posse de Munição</button>
+                                <button class="crime-btn" data-crime="posse-colete" data-tempo="15" data-multa="5000">Art. 130 - Posse de Colete</button>
+                                <button class="crime-btn" data-crime="porte-arma-branca" data-tempo="12" data-multa="4000">Art. 131 - Porte de Arma Branca</button>
+                                <button class="crime-btn" data-crime="trafico-drogas" data-tempo="75" data-multa="30000" data-quantidade-info="+100">Art. 132 - Tráfico de Drogas</button>
+                                <button class="crime-btn" data-crime="aviaozinho" data-tempo="30" data-multa="10000" data-quantidade-info="6 a 100">Art. 133 - Aviãozinho</button>
+                                <button class="crime-btn" data-crime="posse-componentes" data-tempo="25" data-multa="8000">Art. 134 - Posse de Componentes Narcóticos</button>
+                                <button class="crime-btn" data-crime="posse-drogas" data-tempo="20" data-multa="5000" data-quantidade-info="1 a 5">Art. 135 - Posse de Drogas</button>
+                                <button class="crime-btn" data-crime="posse-itens-ilegais" data-tempo="15" data-multa="4000">Art. 136 - Posse de Itens Ilegais</button>
+                                <button class="crime-btn" data-crime="dinheiro-sujo" data-tempo="15" data-multa="8000">Art. 137 - Dinheiro Sujo</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="crimes-grid-column">
+                        <!-- Crimes Contra a Ordem Pública (138–167) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-handcuffs"></i> Crimes Contra a Ordem Pública</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="falsidade-ideologica" data-tempo="25" data-multa="8000">Art. 138 - Falsidade Ideológica</button>
+                                <button class="crime-btn" data-crime="associacao-criminosa" data-tempo="60" data-multa="25000">Art. 139 - Associação Criminosa</button>
+                                <button class="crime-btn" data-crime="apologia-crime" data-tempo="15" data-multa="5000">Art. 140 - Apologia ao Crime</button>
+                                <button class="crime-btn" data-crime="posse-arma-publico" data-tempo="20" data-multa="8000">Art. 141 - Posse de Arma em Público</button>
+                                <button class="crime-btn" data-crime="tentativa-suborno" data-tempo="30" data-multa="12000">Art. 142 - Tentativa de Suborno</button>
+                                <button class="crime-btn" data-crime="ameaca" data-tempo="8" data-multa="2000">Art. 143 - Ameaça</button>
+                                <button class="crime-btn" data-crime="falsa-comunicacao" data-tempo="12" data-multa="4000">Art. 144 - Falsa Comunicação de Crime</button>
+                                <button class="crime-btn" data-crime="desobediencia-01" data-tempo="5" data-multa="1500">Art. 145 - Desobediência 01</button>
+                                <button class="crime-btn" data-crime="desobediencia-02" data-tempo="8" data-multa="2500">Art. 146 - Desobediência 02</button>
+                                <button class="crime-btn" data-crime="desobediencia-03" data-tempo="12" data-multa="4000">Art. 147 - Desobediência 03</button>
+                                <button class="crime-btn" data-crime="assedio-moral" data-tempo="15" data-multa="5000">Art. 148 - Assédio Moral**</button>
+                                <button class="crime-btn" data-crime="atentado-pudor" data-tempo="20" data-multa="8000">Art. 149 - Atentado ao Pudor</button>
+                                <button class="crime-btn" data-crime="vandalismo" data-tempo="12" data-multa="4000">Art. 150 - Vandalismo</button>
+                                <button class="crime-btn" data-crime="invasao-propriedade" data-tempo="15" data-multa="5000">Art. 151 - Invasão de Propriedade</button>
+                                <button class="crime-btn" data-crime="abuso-autoridade" data-tempo="25" data-multa="10000">Art. 152 - Abuso de Autoridade</button>
+                                <button class="crime-btn" data-crime="uso-mascara" data-tempo="8" data-multa="2000">Art. 153 - Uso de Máscara</button>
+                                <button class="crime-btn" data-crime="uso-equipamentos" data-tempo="10" data-multa="3000">Art. 154 - Uso de Equipamentos Restritos</button>
+                                <button class="crime-btn" data-crime="omissao-socorro" data-tempo="15" data-multa="5000">Art. 155 - Omissão de Socorro</button>
+                                <button class="crime-btn" data-crime="tentativa-fuga" data-tempo="20" data-multa="8000">Art. 156 - Tentativa de Fuga</button>
+                                <button class="crime-btn" data-crime="desacato-01" data-tempo="10" data-multa="3000">Art. 157 - Desacato 01**</button>
+                                <button class="crime-btn" data-crime="desacato-02" data-tempo="15" data-multa="5000">Art. 158 - Desacato 02**</button>
+                                <button class="crime-btn" data-crime="desacato-03" data-tempo="20" data-multa="8000">Art. 159 - Desacato 03**</button>
+                                <button class="crime-btn" data-crime="resistencia-prisao" data-tempo="15" data-multa="5000">Art. 160 - Resistência à Prisão</button>
+                                <button class="crime-btn" data-crime="reu-reincidente" data-tempo="10" data-multa="3000">Art. 161 - Réu Reincidente</button>
+                                <button class="crime-btn" data-crime="cumplice" data-tempo="15" data-multa="5000">Art. 162 - Cúmplice</button>
+                                <button class="crime-btn" data-crime="obstrucao-justica" data-tempo="20" data-multa="8000">Art. 163 - Obstrução de Justiça</button>
+                                <button class="crime-btn" data-crime="ocultacao-provas" data-tempo="25" data-multa="10000">Art. 164 - Ocultação de Provas</button>
+                                <button class="crime-btn" data-crime="vadiagem" data-tempo="5" data-multa="1000">Art. 165 - Vadiagem</button>
+                                <button class="crime-btn" data-crime="perturbacao-sossego" data-tempo="8" data-multa="2000">Art. 166 - Perturbação do Sossego Alheio</button>
+                                <button class="crime-btn" data-crime="calunia-injuria" data-tempo="12" data-multa="4000">Art. 167 - Calúnia, Injúria ou Difamação</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Crimes de Trânsito (168–178) -->
+                        <div class="crime-category">
+                            <div class="category-header">
+                                <h3><i class="fas fa-car"></i> Crimes de Trânsito</h3>
+                                <span class="toggle-btn"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                            <div class="crime-buttons">
+                                <button class="crime-btn" data-crime="conducao-imprudente" data-tempo="15" data-multa="3000">Art. 168 - Condução Imprudente</button>
+                                <button class="crime-btn" data-crime="dirigir-contra-mao" data-tempo="12" data-multa="2500">Art. 169 - Dirigir na Contra Mão</button>
+                                <button class="crime-btn" data-crime="alta-velocidade" data-tempo="10" data-multa="2000">Art. 170 - Alta Velocidade</button>
+                                <button class="crime-btn" data-crime="poluicao-sonora" data-tempo="8" data-multa="1500">Art. 171 - Poluição Sonora</button>
+                                <button class="crime-btn" data-crime="corridas-ilegais" data-tempo="20" data-multa="5000">Art. 172 - Corridas Ilegais</button>
+                                <button class="crime-btn" data-crime="uso-excessivo-insulfilm" data-tempo="5" data-multa="1000">Art. 173 - Uso Excessivo de Insulfilm</button>
+                                <button class="crime-btn" data-crime="veiculo-danificado" data-tempo="8" data-multa="2000">Art. 174 - Veículo Muito Danificado</button>
+                                <button class="crime-btn" data-crime="veiculo-estacionado" data-tempo="3" data-multa="500">Art. 175 - Veículo Ilegalmente Estacionado</button>
+                                <button class="crime-btn" data-crime="nao-ceder-passagem" data-tempo="10" data-multa="2000">Art. 176 - Não Ceder Passagem a Viaturas</button>
+                                <button class="crime-btn" data-crime="impedir-fluxo" data-tempo="8" data-multa="1500">Art. 177 - Impedir o Fluxo do Tráfego</button>
+                                <button class="crime-btn" data-crime="dano-patrimonio" data-tempo="15" data-multa="4000">Art. 178 - Dano a Patrimônio Público</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Resultados -->
+            <div class="results-section">
+                <h2><i class="fas fa-clipboard-list"></i> RESUMO DA SENTENÇA</h2>
+                
+                <!-- Crimes Selecionados -->
+                <div class="selected-crimes">
+                    <h3>Crimes Selecionados</h3>
+                    <p class="inafiancavel-note">Artigos com ** são crimes sem direito a fiança.</p>
+                    <div id="selectedCrimesList" class="crimes-list">
+                        <p class="empty-message">Nenhum crime selecionado</p>
+                    </div>
+                </div>
+
+                <!-- Cálculos -->
+                <div class="calculations">
+                    <div class="calc-item">
+                        <span class="label"><i class="fas fa-clock"></i> Pena Total:</span>
+                        <span id="totalPena" class="value">0 meses</span>
+                    </div>
+                    <div class="calc-item">
+                        <span class="label"><i class="fas fa-dollar-sign"></i> Multa Total:</span>
+                        <span id="totalMulta" class="value">$0</span>
+                    </div>
+                    <div class="calc-item fianca-item">
+                        <span class="label"><i class="fas fa-money-bill-wave"></i> Fiança Total:</span>
+                        <span id="totalFianca" class="value">$0</span>
+                    </div>
+                    <div class="fianca-distribuicao">
+                        <div class="calc-item fianca-item">
+                            <span class="label"><i class="fas fa-user-shield"></i> Policial (35%):</span>
+                            <span id="fiancaPolicial" class="value">$0</span>
+                        </div>
+                        <div class="calc-item fianca-item">
+                            <span class="label"><i class="fas fa-desktop"></i> Painel (35%):</span>
+                            <span id="fiancaPainel" class="value">$0</span>
+                        </div>
+                        <div class="calc-item fianca-item">
+                            <span class="label"><i class="fas fa-user-tie"></i> Advogado (30%):</span>
+                            <span id="fiancaAdvogado" class="value">$0</span>
+                        </div>
+                    </div>
+                    <div id="excessWarning" class="excess-warning">
+                        <i class="fas fa-exclamation-triangle"></i> A pena máxima é 150 meses!
+                    </div>
+                </div>
+
+                <!-- Atenuantes -->
+                <div class="attenuants">
+                    <h3><i class="fas fa-balance-scale-right"></i> ATENUANTES APLICADOS:</h3>
+                    <div class="attenuant-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="advogadoConstituido">
+                            <span class="checkmark"></span>
+                            Advogado constituído (-20%)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="reuPrimario">
+                            <span class="checkmark"></span>
+                            Réu primário (-10%)
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="reuConfesso">
+                            <span class="checkmark"></span>
+                            Réu confesso (-10%)
+                        </label>
+                        <label class="checkbox-label reanimado-hp-label">
+                            <input type="checkbox" id="reanimadoHP">
+                            <span class="checkmark"></span>
+                            Reanimado no HP
+                            <div class="hp-input-container">
+                                <input type="number" id="reanimadoHPMeses" class="form-control hp-meses" placeholder="Minutos" min="1" disabled>
+                            </div>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="possuiPorteArma">
+                            <span class="checkmark"></span>
+                            Possui porte de arma
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="fiancaAtenuante">
+                            <span class="checkmark"></span>
+                            Fiança
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Itens Apreendidos -->
+                <div class="seized-items">
+                    <h3><i class="fas fa-box"></i> ITENS APREENDIDOS:</h3>
+                    <textarea id="seizedItems" class="form-control" placeholder="Liste os itens apreendidos..."></textarea>
+                </div>
+
+                <!-- Dinheiro Sujo -->
+                <div class="dirty-money">
+                    <h3><i class="fas fa-money-bill-alt"></i> DINHEIRO SUJO:</h3>
+                    <input type="number" id="dirtyMoney" class="form-control" placeholder="Valor em $" disabled>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="actions">
+                    <button id="copyResults" class="btn btn-primary"><i class="fas fa-copy"></i> Copiar Relatório</button>
+                    <button id="clearAll" class="btn btn-secondary"><i class="fas fa-trash-alt"></i> Limpar Tudo</button>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Calculadora Penal - Policia Revoada | Desenvolvido por <span class="developer-name">Kleito Dyguetto</span></p>
+        </footer>
+    </div>
+
+    <!-- SISTEMA DE PROTEÇÃO ANTI-INSPEÇÃO -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Proteção contra clique com botão direito
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Proteção contra teclas de atalho
+            document.addEventListener('keydown', function(e) {
+                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && e.key === 'u')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Detecção de DevTools
+            let devtools = {
+                open: false,
+                orientation: null
+            };
+            
+            const threshold = 160;
+            
+            setInterval(() => {
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                
+                if (widthThreshold || heightThreshold) {
+                    if (!devtools.open) {
+                        devtools.open = true;
+                        document.body.classList.add('inspected');
+                        console.clear();
+                        console.log('%c⚠️ ACESSO NEGADO ⚠️', 'color: red; font-size: 50px; font-weight: bold;');
+                        console.log('%cEste site está protegido contra inspeção de código.', 'color: red; font-size: 20px;');
+                        console.log('%cTodas as tentativas de acesso são registradas.', 'color: red; font-size: 20px;');
+                    }
+                } else {
+                    if (devtools.open) {
+                        devtools.open = false;
+                        document.body.classList.remove('inspected');
+                    }
+                }
+            }, 500);
+            
+            // Proteção contra console.log
+            const originalLog = console.log;
+            const originalWarn = console.warn;
+            const originalError = console.error;
+            const originalInfo = console.info;
+            
+            console.log = function() {
+                if (devtools.open) {
+                    return;
+                }
+                return originalLog.apply(console, arguments);
+            };
+            
+            console.warn = function() {
+                if (devtools.open) {
+                    return;
+                }
+                return originalWarn.apply(console, arguments);
+            };
+            
+            console.error = function() {
+                if (devtools.open) {
+                    return;
+                }
+                return originalError.apply(console, arguments);
+            };
+            
+            console.info = function() {
+                if (devtools.open) {
+                    return;
+                }
+                    return originalInfo.apply(console, arguments);
+            };
+            
+            // Proteção contra inspeção de elementos
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // Proteção contra debugger
+            setInterval(() => {
+                if (devtools.open) {
+                    debugger;
+                }
+            }, 100);
+            
+            // Proteção contra inspeção de propriedades
+            Object.defineProperty(document, 'hidden', {
+                get: function() {
+                    if (devtools.open) {
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            
+            // Proteção contra inspeção de elementos DOM
+            const originalQuerySelector = document.querySelector;
+            const originalQuerySelectorAll = document.querySelectorAll;
+            
+            document.querySelector = function(selector) {
+                if (devtools.open && selector.includes('script')) {
+                    return null;
+                }
+                return originalQuerySelector.call(this, selector);
+            };
+            
+            document.querySelectorAll = function(selector) {
+                if (devtools.open && selector.includes('script')) {
+                    return [];
+                }
+                return originalQuerySelectorAll.call(this, selector);
+            };
+            
+            // Proteção contra inspeção de variáveis globais
+            window.addEventListener('load', function() {
+                if (devtools.open) {
+                    window.location.href = 'about:blank';
+                }
+            });
+            
+        })();
+    </script>
+
+    <script src="protecao.js"></script>
+    <script src="modelo-artigos.js"></script>
+    <script src="modelo-fianca.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
